@@ -1,0 +1,19 @@
+{
+    "properties": [
+        {
+            "name": "app.jwt",
+            "type": "java.lang.String",
+            "description": "A description for 'app.jwt'"
+        },
+        {
+            "name": "app.expiration-ms",
+            "type": "java.lang.String",
+            "description": "A description for 'app.expiration-ms'"
+        },
+        {
+            "name": "app.secret",
+            "type": "java.lang.String",
+            "description": "A description for 'app.secret'"
+        }
+    ]
+}

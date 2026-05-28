@@ -1,0 +1,53 @@
+image: maven:3.9.6-eclipse-temurin-17
+
+variables:
+  MAVEN_OPTS: >-
+    -Dhttps.protocols=TLSv1.2
+    -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+    -Dorg.slf4j.simpleLogger.showDateTime=true
+    -Djava.awt.headless=true
+
+  POSTGRES_PORT_TEST: 5555
+  POSTGRES_DB_TEST: test
+  POSTGRES_USER_TEST: test
+  POSTGRES_PASSWORD_TEST: test
+
+  MAVEN_CLI_OPTS: >-
+    --batch-mode
+    --errors
+    --fail-at-end
+    --show-version
+    --no-transfer-progress
+    -DinstallAtEnd=true
+    -DdeployAtEnd=true
+
+services:
+  - name: postgres:16
+    alias: db
+    variables:
+      POSTGRES_DB: test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+
+
+cache:
+  paths:
+    - .m2/repository
+
+.verify:
+  stage: test
+  script:
+  - echo "--- Before Copy ---"
+  - ls -l
+  - cp .env.test .env
+  - echo "--- After Copy ---"
+  - ls -l
+  - echo "--- ENV CONTENT ---"
+  - cat .env
+  - mvn $MAVEN_CLI_OPTS verify -Dspring.profiles.active=test
+
+verify:jdk17+migrations+tests:
+  extends:
+    - .verify
+
+

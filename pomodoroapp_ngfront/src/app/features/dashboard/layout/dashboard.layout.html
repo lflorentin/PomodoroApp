@@ -1,0 +1,13 @@
+<div class="dashboard" [class.focus]="ui.focusMode()">
+
+    <app-sidebar *ngIf="!ui.focusMode()" />
+
+    <main class="content" [class.pomodoro-full]="isPomodoro">
+        <router-outlet />
+    </main>
+
+    <button class="focus-fab" *ngIf="ui.focusMode()" (click)="ui.toggleFocus()" title="Quitter le mode focus">
+        ⬅ Exit Focus Mode
+    </button>
+
+</div>

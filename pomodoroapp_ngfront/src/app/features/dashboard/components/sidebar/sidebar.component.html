@@ -1,0 +1,43 @@
+<aside class="sidebar">
+    <h1 class="logo">PomodoroApp</h1>
+
+    <nav>
+        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/dashboard/tasks" routerLinkActive="active">Tasks</a>
+        <a routerLink="/dashboard/pomodoro" routerLinkActive="active">
+            Pomodoro
+            <span class="dot" *ngIf="current()"></span>
+        </a>
+        <a routerLink="/dashboard/settings" routerLinkActive="active">Settings</a>
+    </nav>
+
+    <div class="mini-timer" *ngIf="current()" (click)="goToPomodoro()" [class.work]="current()!.type === 'travail'"
+        [class.break]="current()!.type === 'pause'" [class.urgent]="timer.isUrgent()">
+        <div class="label">
+            {{ current()!.type === 'travail' ? '🍅 Travail' : '☕ Pause' }}
+        </div>
+
+        <div class="time">
+            {{ displayTime() }}
+        </div>
+
+        <div class="mini-task" *ngIf="timer.task()">
+            🎯 {{ timer.task()!.titre }}
+        </div>
+
+        <div class="mini-actions">
+            <button class="mini-btn complete" (click)="complete($event)">✔</button>
+            <button class="mini-btn stop" (click)="stop($event)">✖</button>
+        </div>
+    </div>
+    
+    <div class="sidebar-bottom">
+
+        <button class="focus-btn" (click)="ui.toggleFocus()">
+            🎯 Mode Focus
+        </button>
+
+
+        <button class="logout" (click)="logout()">Logout</button>
+    </div>
+</aside>

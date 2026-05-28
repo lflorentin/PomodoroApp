@@ -1,0 +1,2 @@
+ALTER TABLE session
+ADD COLUMN duree_reelle INTEGER DEFAULT 0;
